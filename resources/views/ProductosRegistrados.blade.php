@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Administración de Productos</title>
+    <title>Productos Registrados</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,7 +16,8 @@
     </header>
     <main>
         <div class="container">
-            <h1>Administración de Productos</h1>
+            <h1>Productos Registrados</h1>
+            <br>
             <a href="{{ route('formularioRegistroProducto') }}" class="btn btn-primary">Agregar Producto</a>
 
             <table class="table">
@@ -34,6 +35,7 @@
                             <td>{{ $producto->precio }}</td>
                             <td>
                                 <a href="{{ route('formularioEditarProducto', ['id' => $producto->id]) }}" class="btn btn-primary">Editar</a>
+                                
                                 <form action="{{ route('eliminarProducto', ['id' => $producto->id]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')

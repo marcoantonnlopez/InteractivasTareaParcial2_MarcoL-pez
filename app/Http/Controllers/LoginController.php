@@ -17,9 +17,9 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             if (auth()->user()->tipo == 'administrador') {
-                return redirect()->route('listaProveedores');
+                return redirect()->route('ProveedoresRegistrados');
             } elseif (auth()->user()->tipo == 'proveedor') {
-                return redirect()->route('listaProductos');
+                return redirect()->route('ProductosRegistrados');
             } elseif (auth()->user()->tipo == 'cliente') {
                 return redirect()->route('cliente.mostrar-solicitud');
             }

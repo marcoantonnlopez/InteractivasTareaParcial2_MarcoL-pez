@@ -14,38 +14,39 @@
 <body>
     <header>
     </header>
-    <main>
-        <div class="container">
-            <h1>Administración de Proveedores</h1>
+    <main class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="mb-0">Proveedores registrados</h1>
             <a href="{{ route('formularioRegistroProveedor')}}" class="btn btn-primary">Agregar Proveedor</a>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Correo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($proveedores as $proveedor)
-                        <tr>
-                            <td>{{ $proveedor->name }}</td>
-                            <td>{{ $proveedor->email }}</td>
-                            <td>
-                                <a href="{{ route('formularioEditarProveedor', ['id' => $proveedor->id]) }}" class="btn btn-primary">Editar</a>
-                                <form action="{{ route('eliminarProveedor', ['id' => $proveedor->id]) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-
         </div>
+        
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Edición</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($proveedores as $proveedor)
+                    <tr>
+                        <td>{{ $proveedor->name }}</td>
+                        <td>{{ $proveedor->email }}</td>
+                        <td>
+                            <a href="{{ route('formularioEditarProveedor', ['id' => $proveedor->id]) }}" class="btn btn-primary">Editar</a>
+                            
+                            <form action="{{ route('eliminarProveedor', ['id' => $proveedor->id]) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </main>
     <footer>
     </footer>

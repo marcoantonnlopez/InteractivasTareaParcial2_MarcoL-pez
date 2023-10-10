@@ -8,16 +8,16 @@ use App\Models\Producto;
 
 class AdminController extends Controller
 {
-    public function listaProveedores()
+    public function ProveedoresRegistrados()
     {
         $proveedores = User::where('tipo', 'proveedor')->get();
 
-        return view('listaProveedores', compact('proveedores'));
+        return view('ProveedoresRegistrados', compact('proveedores'));
     }
 
     public function formularioRegistroProveedor()
     {
-        return view('altaProveedores');
+        return view('registrarProveedor');
     }
 
     public function guardarProveedor(Request $request)
@@ -31,7 +31,7 @@ class AdminController extends Controller
         $proveedor->tipo = 'proveedor'; 
         $proveedor->save();
 
-        return redirect()->route('listaProveedores')->with('success', 'Proveedor agregado correctamente');
+        return redirect()->route('ProveedoresRegistrados')->with('success', 'Proveedor agregado correctamente');
     }
 
     public function formularioEditarProveedor($id)
@@ -50,7 +50,7 @@ class AdminController extends Controller
         $proveedor->password = bcrypt($request->input('password'));
         $proveedor->save();
 
-        return redirect()->route('listaProveedores')->with('success', 'Proveedor actualizado correctamente');
+        return redirect()->route('ProveedoresRegistrados')->with('success', 'Proveedor actualizado correctamente');
     }
 
     public function eliminarProveedor($id)
@@ -59,15 +59,15 @@ class AdminController extends Controller
 
         $proveedor->delete();
 
-        return redirect()->route('listaProveedores')->with('borrar', 'Proveedor eliminado correctamente');
+        return redirect()->route('ProveedoresRegistrados')->with('borrar', 'Proveedor eliminado correctamente');
     }
 
 
-    public function listaProductos()
+    public function ProductosRegistrados()
     {
         $productos = Producto::all();
 
-        return view('listaProductos', compact('productos'));
+        return view('ProductosRegistrados', compact('productos'));
     }
 
     public function formularioRegistroProducto()
@@ -85,10 +85,10 @@ class AdminController extends Controller
             $producto = new Producto();
             $producto->nombre = $request->input('nombre');
             $producto->precio = $request->input('precio');
-            $producto->id_usuario = auth()->user()->id; 
+            $producto->user_id = auth()->user()->id; 
             $producto->save();
 
-            return redirect()->route('listaProductos')->with('success', 'Producto agregado correctamente');
+            return redirect()->route('ProductosRegistrados')->with('success', 'Producto agregado correctamente');
         }
 
     public function formularioEditarProducto($id)
@@ -111,7 +111,7 @@ class AdminController extends Controller
         $producto->precio = $request->input('precio');
         $producto->save();
 
-        return redirect()->route('listaProductos')->with('success', 'Producto actualizado correctamente');
+        return redirect()->route('ProductosRegistrados')->with('success', 'Producto actualizado correctamente');
     }
 
     public function eliminarProducto($id)
@@ -119,7 +119,7 @@ class AdminController extends Controller
         $producto = Producto::find($id);
 
         $producto->delete();
-        return redirect()->route('listaProductos')->with('borrar', 'Producto eliminado correctamente');
+        return redirect()->route('ProductosRegistrados')->with('borrar', 'Producto eliminado correctamente');
     }
 
 

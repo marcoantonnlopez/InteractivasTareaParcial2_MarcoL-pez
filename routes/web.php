@@ -19,6 +19,18 @@ use App\Http\Controllers\ProvedorController;
 |
 */
 
+Route::middleware(['auth', 'proveedor'])->group(function () {
+    Route::get('/informacion-proveedor', [ProvedorController::class, 'mostrarInformacion'])->name('proveedor.informacion');
+    Route::get('/proveedor/cambiar-estado', [ProvedorController::class, 'mostrarCambiarEstado'])->name('proveedor.mostrar-cambiar-estado');
+    Route::put('/proveedor/cambiar-estado/{id}', [ProvedorController::class, 'cambiarEstado'])->name('proveedor.cambiar-estado');
+    Route::get('/productos', [AdminController::class, 'ProductosRegistrados'])->name('ProductosRegistrados');
+    Route::get('/productos/crear', [AdminController::class, 'formularioRegistroProducto'])->name('formularioRegistroProducto');
+    Route::post('/productos/crear', [AdminController::class, 'guardarProducto'])->name('guardarProducto');
+    Route::get('/productos/editar/{id}', [AdminController::class, 'formularioEditarProducto'])->name('formularioEditarProducto');
+    Route::put('/productos/editar/{id}', [AdminController::class, 'actualizarProducto'])->name('actualizarProducto');
+    Route::delete('/productos/eliminar/{id}', [AdminController::class, 'eliminarProducto'])->name('eliminarProducto');
+});
+
 Route::middleware(['auth', 'cliente'])->group(function () {
     Route::get('/cliente/actualizar-datos', [ClienteController::class, 'mostrarFormularioDatos'])->name('cliente.mostrar-formulario-datos');
     Route::put('/cliente/actualizar-datos', [ClienteController::class, 'actualizarDatos'])->name('cliente.actualizar-datos');
@@ -28,48 +40,25 @@ Route::middleware(['auth', 'cliente'])->group(function () {
 
 });
 
-Route::middleware(['auth', 'proveedor'])->group(function () {
-    Route::get('/informacion-proveedor', [ProvedorController::class, 'mostrarInformacion'])->name('proveedor.informacion');
-    Route::get('/proveedor/cambiar-estado', [ProvedorController::class, 'mostrarCambiarEstado'])->name('proveedor.mostrar-cambiar-estado');
-    Route::put('/proveedor/cambiar-estado/{id}', [ProvedorController::class, 'cambiarEstado'])->name('proveedor.cambiar-estado');
-    Route::get('/productos', [AdminController::class, 'listaProductos'])->name('listaProductos');
-    Route::get('/productos/crear', [AdminController::class, 'formularioRegistroProducto'])->name('formularioRegistroProducto');
-    Route::post('/productos/crear', [AdminController::class, 'guardarProducto'])->name('guardarProducto');
-    Route::get('/productos/editar/{id}', [AdminController::class, 'formularioEditarProducto'])->name('formularioEditarProducto');
-    Route::put('/productos/editar/{id}', [AdminController::class, 'actualizarProducto'])->name('actualizarProducto');
-    Route::delete('/productos/eliminar/{id}', [AdminController::class, 'eliminarProducto'])->name('eliminarProducto');
-});
-
+Route::post('/guardar-cliente', [ClienteController::class, 'guardarCliente'])->name('guardarCliente');
+Route::get('/registro-cliente', [ClienteController::class, 'formularioRegistro'])->name('formularioRegistro');
 Route::get('/inicio-sesion', [LoginController::class, 'showLoginForm'])->name('inicio-sesion');
 Route::post('/inicio-sesion', [LoginController::class, 'login'])->name('login.post');
-Route::get('/registro-cliente', [ClienteController::class, 'formularioRegistro'])->name('formularioRegistro');
-Route::post('/guardar-cliente', [ClienteController::class, 'guardarCliente'])->name('guardarCliente');
 
-
-
-
+// RUTAS ACCESO ADMIN
 Route::middleware(['auth', 'admin'])->group(function () {
-    // Ruta para mostrar la lista de proveedores
-    Route::get('/listaProveedores', [AdminController::class, 'listaProveedores'])->name('listaProveedores');
-
-    // Ruta para mostrar el formulario de registro de proveedores
-    Route::get('/altaProveedores', [AdminController::class, 'formularioRegistroProveedor'])->name('formularioRegistroProveedor');
-
-    // Ruta para procesar el formulario de registro de proveedores
+    // Proveedores 
+    Route::get('/ProveedoresRegistrados', [AdminController::class, 'ProveedoresRegistrados'])->name('ProveedoresRegistrados');
+    Route::get('/registrarProveedor', [AdminController::class, 'formularioRegistroProveedor'])->name('formularioRegistroProveedor');
     Route::post('/guardarProveedor', [AdminController::class, 'guardarProveedor'])->name('guardarProveedor');
-
-    // Ruta para mostrar el formulario de edición de proveedores
     Route::get('/editaProveedores/{id}', [AdminController::class, 'formularioEditarProveedor'])->name('formularioEditarProveedor');
-
-    // Ruta para actualizar la información del proveedor
     Route::put('/actualizarProveedor/{id}', [AdminController::class, 'actualizarProveedor'])->name('actualizarProveedor');
-
-    // Ruta para eliminar un proveedor
     Route::delete('/eliminarProveedor/{id}', [AdminController::class, 'eliminarProveedor'])->name('eliminarProveedor');
 
-    Route::get('/productos', [AdminController::class, 'listaProductos'])->name('listaProductos');
-    Route::get('/productos/crear', [AdminController::class, 'formularioRegistroProducto'])->name('formularioRegistroProducto');
+    // Productos
+    Route::get('/productos', [AdminController::class, 'ProductosRegistrados'])->name('ProductosRegistrados');
     Route::post('/productos/crear', [AdminController::class, 'guardarProducto'])->name('guardarProducto');
+    Route::get('/productos/crear', [AdminController::class, 'formularioRegistroProducto'])->name('formularioRegistroProducto');
     Route::get('/productos/editar/{id}', [AdminController::class, 'formularioEditarProducto'])->name('formularioEditarProducto');
     Route::put('/productos/editar/{id}', [AdminController::class, 'actualizarProducto'])->name('actualizarProducto');
     Route::delete('/productos/eliminar/{id}', [AdminController::class, 'eliminarProducto'])->name('eliminarProducto');
