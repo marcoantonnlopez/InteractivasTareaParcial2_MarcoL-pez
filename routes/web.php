@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProvedorController;
+use App\Http\Controllers\ProfileController;
 
 
 /*
@@ -19,10 +19,13 @@ use App\Http\Controllers\ProvedorController;
 |
 */
 
+// PROVEEDOR RUTAS
 Route::middleware(['auth', 'proveedor'])->group(function () {
     Route::get('/informacion-proveedor', [ProvedorController::class, 'mostrarInformacion'])->name('proveedor.informacion');
     Route::get('/proveedor/cambiar-estado', [ProvedorController::class, 'mostrarCambiarEstado'])->name('proveedor.mostrar-cambiar-estado');
     Route::put('/proveedor/cambiar-estado/{id}', [ProvedorController::class, 'cambiarEstado'])->name('proveedor.cambiar-estado');
+    
+    // Productos
     Route::get('/productos', [AdminController::class, 'ProductosRegistrados'])->name('ProductosRegistrados');
     Route::get('/productos/crear', [AdminController::class, 'formularioRegistroProducto'])->name('formularioRegistroProducto');
     Route::post('/productos/crear', [AdminController::class, 'guardarProducto'])->name('guardarProducto');
@@ -31,6 +34,7 @@ Route::middleware(['auth', 'proveedor'])->group(function () {
     Route::delete('/productos/eliminar/{id}', [AdminController::class, 'eliminarProducto'])->name('eliminarProducto');
 });
 
+// CLIENTE RUTAS
 Route::middleware(['auth', 'cliente'])->group(function () {
     Route::get('/cliente/actualizar-datos', [ClienteController::class, 'mostrarFormularioDatos'])->name('cliente.mostrar-formulario-datos');
     Route::put('/cliente/actualizar-datos', [ClienteController::class, 'actualizarDatos'])->name('cliente.actualizar-datos');
@@ -63,6 +67,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/productos/editar/{id}', [AdminController::class, 'actualizarProducto'])->name('actualizarProducto');
     Route::delete('/productos/eliminar/{id}', [AdminController::class, 'eliminarProducto'])->name('eliminarProducto');
 });
+
 
 Route::get('/', function () {
     return view('welcome');
